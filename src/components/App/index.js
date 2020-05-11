@@ -25,8 +25,9 @@ class App extends Component {
 
     render() {
         return (
-            <div>
+            <div className="container">
                 {this.getMeme()}
+                <h1 className="mt-4">OH LOOK A MEME</h1>
             </div>
         )
     }
