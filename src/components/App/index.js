@@ -1,41 +1,29 @@
-import React from 'react';
-import ImageContainer from '../ImageContainer';
-import { Container, Row, Col, Button } from 'reactstrap';
-import { getMeme } from '../../api';
+import React, { Component } from 'react';
 
-class App extends React.Component {
-    state = {
-        currentUrl: ''
+class App extends Component {
+    state = { memeArr: '' }
+
+    componentDidMount() {
+        const getMemes = async () => {
+            const response = await fetch('https://api.imgflip.com/get_memes')
+            const meme = await response.json();
+            this.setState({ memeArr: meme.data.memes })
+        }
+        getMemes()
+            .then(response => {
+                console.log('FUCK YES IT WORKED')
+            })
+            .catch(error => {
+                console.log("Error", error)
+            });
     }
 
-    onClickHandler = () => {
-        //Call getMeme function in api to get a meme's url
-        console.log(getMeme()); // <--- is wrong and doen't give url for some reason :(
-        const url = getMeme()
-        //Tell the ImageContainer to display a new meme.
-        this.setState({ currentUrl: url })
-    }
+
+
 
     render() {
         return (
-            <Container>
-                <Row>
-                    <Col className="m-4">
-                        <ImageContainer
-                            meme={this.state.currentUrl}
-                        />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col className="m-4">
-                        <Button
-                            color="primary"
-                            onClick={this.onClickHandler}
-                        >Generate Meme
-                    </Button>
-                    </Col>
-                </Row>
-            </Container>
+            <div>Yeeeeeessssssssssss</div>
         )
     }
 }
