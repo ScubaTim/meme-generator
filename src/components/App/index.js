@@ -1,29 +1,33 @@
 import React, { Component } from 'react';
 
 class App extends Component {
-    state = { memeArr: '' }
+    state = { memeArr: [] }
 
     componentDidMount() {
         const getMemes = async () => {
             const response = await fetch('https://api.imgflip.com/get_memes')
             const meme = await response.json();
             this.setState({ memeArr: meme.data.memes })
+            console.log(this.state.memeArr[0])
         }
         getMemes()
-            .then(response => {
-                console.log('FUCK YES IT WORKED')
-            })
             .catch(error => {
                 console.log("Error", error)
             });
     }
 
-
+    getMeme() {
+        const memeUrls = this.state.memeArr.map(meme => meme.url)
+        const memeLink = <img src={memeUrls[0]} alt="A meme" width="800px" height="auto"></img>
+        return memeLink;
+    }
 
 
     render() {
         return (
-            <div>Yeeeeeessssssssssss</div>
+            <div>
+                {this.getMeme()}
+            </div>
         )
     }
 }
