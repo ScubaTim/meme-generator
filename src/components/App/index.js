@@ -18,8 +18,10 @@ class App extends Component {
 
     getMeme() {
         const memeUrls = this.state.memeArr.map(meme => meme.url)
-        const memeLink = <img src={memeUrls[0]} alt="A meme" width="800px" height="auto"></img>
-        return memeLink;
+        const memeNames = this.state.memeArr.map(meme => meme.name)
+        const memeName = memeNames[0]
+        const meme = <div><img src={memeUrls[0]} alt="A meme" width="800px" height="auto"></img><h1 className="mt-4">{memeName}</h1></div>
+        return meme;
     }
 
 
@@ -27,7 +29,6 @@ class App extends Component {
         return (
             <div className="container">
                 {this.getMeme()}
-                <h1 className="mt-4">OH LOOK A MEME</h1>
             </div>
         )
     }
