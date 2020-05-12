@@ -1,14 +1,20 @@
 import React, { Component } from 'react';
+import { Button, Row, Col } from 'reactstrap';
 
 class App extends Component {
-    state = { memeArr: [] }
+    state = {
+        memeArr: [],
+        memeUrl: '',
+        memeTitle: ''
+    }
 
     componentDidMount() {
         const getMemes = async () => {
             const response = await fetch('https://api.imgflip.com/get_memes')
             const meme = await response.json();
-            this.setState({ memeArr: meme.data.memes })
-            console.log(this.state.memeArr[0])
+            this.setState({
+                memeArr: meme.data.memes,
+            })
         }
         getMemes()
             .catch(error => {
@@ -16,20 +22,39 @@ class App extends Component {
             });
     }
 
-    getMeme() {
-        const memeUrls = this.state.memeArr.map(meme => meme.url)
-        const memeNames = this.state.memeArr.map(meme => meme.name)
-        const memeName = memeNames[0]
-        const meme = <div><img src={memeUrls[0]} alt="A meme" width="800px" height="auto"></img><h1 className="mt-4">{memeName}</h1></div>
-        return meme;
+    //Fix eet
+    handleClick = () => {
+        const memeUrl = this.state.memeArr.map(meme => meme.url)
+        const memeName = this.state.memeArr.map(meme => meme.name)
+        const rand = Math.floor(this.state.memeArr.length * Math.random())
+        this.setState({ memeUrl: memeUrl[rand], memeTitle: memeName[rand] })
     }
 
 
     render() {
         return (
-            <div className="container">
-                {this.getMeme()}
+            <div>
+                <div className="container border">
+                    <Row>
+                        <Col>
+                            <img src={this.state.memeUrl} alt="random meme"></img>
+                            <h1>{this.state.memeTitle}</h1>
+                        </Col>
+                    </Row>
+                </div>
+                <Row className="container">
+                    <Col>
+                        <Button
+                            outline
+                            style={{ color: 'white' }}
+                            size="lg"
+                            onClick={this.handleClick}
+                        >Random Meme Me!
+                        </Button>
+                    </Col>
+                </Row>
             </div>
+
         )
     }
 }
