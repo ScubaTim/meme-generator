@@ -30,14 +30,13 @@ class App extends Component {
         this.setState({ memeUrl: memeUrl[rand], memeTitle: memeName[rand] })
     }
 
-
     render() {
         return (
             <div>
                 <div className="container border">
                     <Row>
                         <Col>
-                            <img src={this.state.memeUrl} alt="random meme"></img>
+                            {this.state.memeUrl === '' ? <h1>Random Meme :D</h1> : <img src={this.state.memeUrl} alt="random meme" width="auto" height="480px"></img>}
                             <h1>{this.state.memeTitle}</h1>
                         </Col>
                     </Row>
